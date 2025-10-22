@@ -37,6 +37,9 @@ ALLOWED_HOSTS = []
 # DEVELOPEMENT
 # ALLOWED_HOSTS = ['*']
 
+# 22-10-2025
+CSRF_TRUSTED_ORIGINS = ['https://pso-django-demo.azurewebsites.net']
+
 # Application definition
 
 INSTALLED_APPS = [
