@@ -1,6 +1,6 @@
 
 
-# Python + Django + Azure App Service
+# Python + Django + MySQL + Azure App Service
 
 This example shows how to use Django 5 on Azure App Service
 
@@ -40,8 +40,6 @@ https://pso-django-demo.azurewebsites.net
 When starting the Django Website from the Virtual Enviroment (.venv) you will notice that latest Django will start. Otherwise you can use the Global Django if you have one installed by running:
 
 - python manage.py runserver
-
-There is no Administration Backend and no Database for this Starter serving Statis files
 
 ## How it Works
 
@@ -126,7 +124,33 @@ Your Django application is now available at `http://127.0.0.1:8000/`.
 
 ## The Admin Backend and Databases
 
-There is no Database at the moment
+The Admin Backend is using a remote MySQL Database for both Production and Developement, and is able to use a SQLite for Developement as well
+
+To connect to the MySQL use "pymysql" installed and the packages from the requirements.txt when using a virtual invironment locally. At Azure everything will happen by DevOps 
+
+```bash
+pip install -r requirements.txt
+```
+
+For understad the "pymysql" take a look at the files needed for connecting to MySQL: `mysite/mysql_setup.py` and 
+
+`mysite/__init__.py`
+
+Create a Super User for the Admin Backend in the MySQL or SQLite
+
+```bash
+python manage.py createsuperuser
+```
+
+Make the Migration to the MySQL or SQLite 
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+You will need to do the Migration at first and when / if you will add, update or delete models.py which this Django Web App does not use. 
+
+For using a SQLite developing / locally make the config in the setting file `mysite/settings.py`
 
 Find the section DATABASES = {} and add support for SQLite and comment out the MySQL
 
@@ -192,7 +216,7 @@ Make sure that your static files are ready by running
 python manage.py collectstatic
 ```
 
-Note: The above command may not be needed as this Starter dont have a Django Admin backend
+Note: The above command will happen by DevOps at Azure App Service and the Django Admin backend should be ready
 
 Make sure to set Debug = False in the file `quickstartproject/settings.py`
 

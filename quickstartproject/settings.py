@@ -33,11 +33,12 @@ DEBUG = False
 # PRODUCTION
 ALLOWED_HOSTS = []
 
-# 22-10-2025 - Needed at locally but not working at Azure
+# 22-10-2025 - Needed locally but not working at Azure
 # DEVELOPEMENT
 # ALLOWED_HOSTS = ['*']
 
-# 22-10-2025
+# 22-10-2025 - Needed at Azure to avoid 403 forbidden when trying to login to the Django Admin Backend
+# PRODUCTION
 CSRF_TRUSTED_ORIGINS = ['https://pso-django-demo.azurewebsites.net']
 
 # Application definition
