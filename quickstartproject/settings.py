@@ -16,6 +16,9 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# 22-10-2025 - loading variables for Django Secret Key + MySQL info
+from dotenv import load_dotenv
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -26,8 +29,13 @@ SECRET_KEY = '1234567890'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+# 22-10-2025 - Needed at Azure, but not working locally
+# PRODUCTION
 ALLOWED_HOSTS = []
 
+# 22-10-2025 - Needed at locally but not working at Azure
+# DEVELOPEMENT
+# ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -87,6 +95,25 @@ DATABASES = {}
 }'''
 
 
+# 22-10-2025 - Loading the MySQL settings from .env file
+DB_NAME=os.getenv('DB_NAME')
+DB_USER=os.getenv('DB_USER')
+DB_PASSWORD=os.getenv('DB_PASSWORD')
+DB_HOST=os.getenv('DB_HOST')
+
+DATABASES = {
+    'default': {
+        'ENGINE'  : 'django.db.backends.mysql',
+
+        'NAME'    : DB_NAME,
+        'USER'    : DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST'    : DB_HOST,
+                       
+        'PORT'    : 3306,
+    }
+}
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -121,11 +148,21 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+# 22-10-2025 - Needed at Azure but dont work when running locally developing !
+# PRODUCTION
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
+
 STATIC_URL = 'static/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# 21-10-2025 - Works at Azure but dont work when running locally developing !
+# PRODUCTION
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# 22-10-2025 - Needed for locally developing and seems to work at Azure too !
+# DEVELOPEMENT
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

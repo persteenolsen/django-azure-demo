@@ -1,2 +1,7 @@
-Django
-whitenoise
+Django==5.1.11
+pymysql==1.1.2
+python-dotenv==1.0.1
+whitenoise==6.11.0
+
+
+

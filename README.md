@@ -4,7 +4,7 @@
 
 This example shows how to use Django 5 on Azure App Service
 
-Last updated: 21-10-2025
+Last updated: 22-10-2025
 
 ## Demo at Azure
 
@@ -30,7 +30,7 @@ https://pso-django-demo.azurewebsites.net
 - Copy requirements.txt to .venv
 
 - (.venv) pip install -r requirements.txt
-
+                        
 - (.venv) pip freeze > requirements.txt
 
 - (.venv) cd ../
