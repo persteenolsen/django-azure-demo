@@ -1,10 +1,10 @@
 
 
-# Python + Django + MySQL + Azure App Service
+# Python + Django + MariaDB + Azure App Service
 
 This example shows how to use Django 5 on Azure App Service
 
-Last updated: 07-11-2025
+Last updated: 08-11-2025
 
 ## Demo at Azure
 
@@ -124,25 +124,25 @@ Your Django application is now available at `http://127.0.0.1:8000/`.
 
 ## The Admin Backend and Databases
 
-The Admin Backend is using a remote MySQL Database for both Production and Developement, and is able to use a SQLite for Developement as well
+The Admin Backend is using a remote MariaDB Database for both Production and Developement, and is able to use a SQLite for Developement as well
 
-To connect to the MySQL use "pymysql" installed and the packages from the requirements.txt when using a virtual invironment locally. At Azure everything will happen by DevOps 
+To connect to the MariaDB use "pymysql" installed and the packages from the requirements.txt when using a virtual invironment locally. At Azure everything will happen by DevOps 
 
 ```bash
 pip install -r requirements.txt
 ```
 
-For understad the "pymysql" take a look at the files needed for connecting to MySQL: `mysite/mysql_setup.py` and 
+For understad the "pymysql" take a look at the files needed for connecting to MariaDB: `mysite/mysql_setup.py` and 
 
 `mysite/__init__.py`
 
-Create a Super User for the Admin Backend in the MySQL or SQLite
+Create a Super User for the Admin Backend in the MariaDB or SQLite
 
 ```bash
 python manage.py createsuperuser
 ```
 
-Make the Migration to the MySQL or SQLite 
+Make the Migration to the MariaDB or SQLite 
 
 ```bash
 python manage.py makemigrations
