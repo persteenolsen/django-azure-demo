@@ -20,24 +20,31 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 from dotenv import load_dotenv
 load_dotenv()
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
+# 20-05-2026 - For working with databases at Render and Neon Cloud
+import dj_database_url
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '1234567890'
+# 20-05-2026 - For working with databases at Render and Neon Cloud
+DATABASE_URL=os.getenv('DATABASE_URL')
+
+# Getting the secret key from env locally and from enviroment variable in production
+SECRET_KEY=os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+
+# With DEBUG=False 404 errors will be directed to a default 404 template
+# Not: Django will display a 404.html if you have created one :-)
 DEBUG = False
 
-# 22-10-2025 - Needed at Azure, but not working locally
-# PRODUCTION
-ALLOWED_HOSTS = []
+# 20-05-2026 - Needed for locally developing but dont work at Azure !
+# DEVELOPEMENT - Disable for Production !
+# ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
-# 22-10-2025 - Needed locally but not working at Azure
-# DEVELOPEMENT
-# ALLOWED_HOSTS = ['*']
+# 20-05-2026 - Needed for Azure but dont work when running locally developing !
+# PRODUCTION - Disable for Developement !
+ALLOWED_HOSTS = ['pso-django-demo.azurewebsites.net']
 
-# 22-10-2025 - Needed at Azure to avoid 403 forbidden when trying to login to the Django Admin Backend
+# 20-05-2026 - Needed at Azure to avoid 403 forbidden when trying to login to the Django Admin Backend
 # PRODUCTION
 CSRF_TRUSTED_ORIGINS = ['https://pso-django-demo.azurewebsites.net']
 
@@ -86,11 +93,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'quickstartproject.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-DATABASES = {}
-
 '''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -98,26 +100,17 @@ DATABASES = {}
     }
 }'''
 
-
-# 22-10-2025 - Loading the MariaDB settings from .env file
-DB_NAME=os.getenv('DB_NAME')
-DB_USER=os.getenv('DB_USER')
-DB_PASSWORD=os.getenv('DB_PASSWORD')
-DB_HOST=os.getenv('DB_HOST')
-
+# 20-05-2026 - PostgreSQL with a Serverless setup at Neon Cloud
 DATABASES = {
-    'default': {
 
-        # 09-11-2025 - For both MariaDB and MySQL
-        'ENGINE'  : 'django.db.backends.mysql',
+    'default': dj_database_url.config(
 
-        'NAME'    : DB_NAME,
-        'USER'    : DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST'    : DB_HOST,
-                       
-        'PORT'    : 3306,
-    }
+        default=DATABASE_URL,
+
+        conn_max_age=600,
+        ssl_require=True, 
+        conn_health_checks=True,
+    )
 }
 
 # Password validation
@@ -154,7 +147,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-# 22-10-2025 - Needed at Azure but dont work when running locally developing !
+# 20-05-2026 - Needed at Azure but dont work when running locally developing !
 # PRODUCTION
 STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
 
@@ -162,11 +155,11 @@ STATIC_URL = 'static/'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# 21-10-2025 - Works at Azure but dont work when running locally developing !
+# 20-05-2026 - Works at Azure but dont work when running locally developing !
 # PRODUCTION
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# 22-10-2025 - Needed for locally developing and seems to work at Azure too !
+# 20-05-2026 - Needed for locally developing and seems to work at Azure too !
 # DEVELOPEMENT
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 

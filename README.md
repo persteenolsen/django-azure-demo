@@ -1,10 +1,10 @@
 
 
-# Python + Django + MariaDB + Azure App Service
+# Python + Django + PostgreSQL + Azure App Service
 
 This example shows how to use Django 5 on Azure App Service
 
-Last updated: 06-03-2026
+Last updated: 20-05-2026
 
 ## Demo at Azure
 
