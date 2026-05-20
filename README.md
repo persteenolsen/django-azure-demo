@@ -124,25 +124,19 @@ Your Django application is now available at `http://127.0.0.1:8000/`.
 
 ## The Admin Backend and Databases
 
-The Admin Backend is using a remote MariaDB Database for both Production and Developement, and is able to use a SQLite for Developement as well
-
-To connect to the MariaDB use "pymysql" installed and the packages from the requirements.txt when using a virtual invironment locally. At Azure everything will happen by DevOps 
+The Admin Backend is using a remote PostgreSQL Database for both Production and Developement, and is able to use a SQLite for Developement as well
 
 ```bash
 pip install -r requirements.txt
 ```
 
-For understad the "pymysql" take a look at the files needed for connecting to MariaDB: `mysite/mysql_setup.py` and 
-
-`mysite/__init__.py`
-
-Create a Super User for the Admin Backend in the MariaDB or SQLite
+Create a Super User for the Admin Backend in the PostgreSQL or SQLite
 
 ```bash
 python manage.py createsuperuser
 ```
 
-Make the Migration to the MariaDB or SQLite 
+Make the Migration to the PostgreSQL or SQLite 
 
 ```bash
 python manage.py makemigrations
@@ -152,7 +146,7 @@ You will need to do the Migration at first and when / if you will add, update or
 
 For using a SQLite developing / locally make the config in the setting file `mysite/settings.py`
 
-Find the section DATABASES = {} and add support for SQLite and comment out the MySQL
+Find the section DATABASES = {} and add support for SQLite and comment out the PostgreSQL
 
 ## Static files for the Frontend
 
@@ -219,6 +213,13 @@ python manage.py collectstatic
 Note: The above command will happen by DevOps at Azure App Service and the Django Admin backend should be ready
 
 Make sure to set Debug = False in the file `quickstartproject/settings.py`
+
+
+At Azure Portal go to the Configuration - Stack settings - Startup command: 
+
+"gunicorn quickstartproject.wsgi:application --bind 0.0.0.0:$PORT"
+
+Make sure to set the environment variables at Azure Portal 
 
 Make a commit to GitHub which will start GitHub Actions and the Website will be updated
 
