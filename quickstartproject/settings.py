@@ -38,7 +38,7 @@ DEBUG = False
 
 # 20-05-2026 - Needed for locally developing but dont work at Azure !
 # DEVELOPEMENT - Disable for Production !
-# ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+#ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 # 20-05-2026 - Needed for Azure but dont work when running locally developing !
 # PRODUCTION - Disable for Developement !
